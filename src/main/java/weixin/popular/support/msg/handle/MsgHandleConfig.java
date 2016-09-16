@@ -45,7 +45,7 @@ public abstract class MsgHandleConfig {
 	 * @date 2016年9月16日
 	 * @param type
 	 */
-	public static void addHandleType(MsgType type) {
+	public static void addType(MsgType type) {
 		msgTypes.put(type.getMsgType(), type);
 	}
 
@@ -55,7 +55,7 @@ public abstract class MsgHandleConfig {
 	 * @date 2016年9月16日
 	 * @param type
 	 */
-	public static void addHandleType(EventType type) {
+	public static void addType(EventType type) {
 		events.put(type.getEvent(), type);
 	}
 
@@ -64,7 +64,7 @@ public abstract class MsgHandleConfig {
 	 * @author Moyq5
 	 * @date 2016年9月16日
 	 */
-	public static void clearMsgHandleTypes() {
+	public static void clearMsgTypes() {
 		msgTypes.clear();
 	}
 
@@ -73,7 +73,7 @@ public abstract class MsgHandleConfig {
 	 * @author Moyq5
 	 * @date 2016年9月16日
 	 */
-	public static void clearEventHandleTypes() {
+	public static void clearEventTypes() {
 		events.clear();
 	}
 	
@@ -82,7 +82,7 @@ public abstract class MsgHandleConfig {
 		return msgTypes;
 	}
 
-	public static Map<String, EventType> getEvents() {
+	public static Map<String, EventType> getEventTypes() {
 		return events;
 	}
 

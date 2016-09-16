@@ -35,7 +35,7 @@ public abstract class MsgHandleFactory {
 			typeName = msgType.name();
 			msgClass = msgType.getMsgClass();
 
-		} else if (null != (event = MsgHandleConfig.getEvents().get(
+		} else if (null != (event = MsgHandleConfig.getEventTypes().get(
 				msg.getEvent()))) {
 
 			typeName = event.name();
