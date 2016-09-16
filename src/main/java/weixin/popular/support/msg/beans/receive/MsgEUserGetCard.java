@@ -20,7 +20,7 @@ public class MsgEUserGetCard extends MsgECardCode {
 	/**
 	 * 是否为转赠，1代表是，0代表否。
 	 */
-	private Boolean IsGiveByFriend;
+	private Integer IsGiveByFriend;
 	
 	/**
 	 * 转赠前的code序列号。
@@ -50,11 +50,11 @@ public class MsgEUserGetCard extends MsgECardCode {
 	 * 
 	 * @return
 	 */
-	public Boolean getIsGiveByFriend() {
+	public Integer getIsGiveByFriend() {
 		return IsGiveByFriend;
 	}
 
-	public void setIsGiveByFriend(Boolean isGiveByFriend) {
+	public void setIsGiveByFriend(Integer isGiveByFriend) {
 		IsGiveByFriend = isGiveByFriend;
 	}
 

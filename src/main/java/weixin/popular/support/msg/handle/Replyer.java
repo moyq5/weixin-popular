@@ -1,46 +1,6 @@
 package weixin.popular.support.msg.handle;
 
-import weixin.popular.support.msg.beans.receive.MsgEAnnualRenew;
-import weixin.popular.support.msg.beans.receive.MsgECardNotPassCheck;
-import weixin.popular.support.msg.beans.receive.MsgECardPassCheck;
-import weixin.popular.support.msg.beans.receive.MsgECardPayOrder;
-import weixin.popular.support.msg.beans.receive.MsgECardSkuRemind;
-import weixin.popular.support.msg.beans.receive.MsgEClick;
-import weixin.popular.support.msg.beans.receive.MsgELocation;
-import weixin.popular.support.msg.beans.receive.MsgELocationSelect;
-import weixin.popular.support.msg.beans.receive.MsgEMassSendJobFinish;
-import weixin.popular.support.msg.beans.receive.MsgENamingVerifyFail;
-import weixin.popular.support.msg.beans.receive.MsgENamingVerifySuccess;
-import weixin.popular.support.msg.beans.receive.MsgEPicPhotoOrAlbum;
-import weixin.popular.support.msg.beans.receive.MsgEPicSysphoto;
-import weixin.popular.support.msg.beans.receive.MsgEPicWeixin;
-import weixin.popular.support.msg.beans.receive.MsgEPoiCheckNotify;
-import weixin.popular.support.msg.beans.receive.MsgEQualificationVerifyFail;
-import weixin.popular.support.msg.beans.receive.MsgEQualificationVerifySuccess;
-import weixin.popular.support.msg.beans.receive.MsgEScan;
-import weixin.popular.support.msg.beans.receive.MsgEScancodePush;
-import weixin.popular.support.msg.beans.receive.MsgEScancodeWaitmsg;
-import weixin.popular.support.msg.beans.receive.MsgEShakeAroundLotteryBind;
-import weixin.popular.support.msg.beans.receive.MsgEShakeAroundUserShake;
-import weixin.popular.support.msg.beans.receive.MsgESubscribe;
-import weixin.popular.support.msg.beans.receive.MsgETemplateSendJobFinish;
-import weixin.popular.support.msg.beans.receive.MsgEUnSubscribe;
-import weixin.popular.support.msg.beans.receive.MsgEUpdateMemberCard;
-import weixin.popular.support.msg.beans.receive.MsgEUserConsumeCard;
-import weixin.popular.support.msg.beans.receive.MsgEUserDelCard;
-import weixin.popular.support.msg.beans.receive.MsgEUserEnterSessionFromCard;
-import weixin.popular.support.msg.beans.receive.MsgEUserGetCard;
-import weixin.popular.support.msg.beans.receive.MsgEUserPayFromPayCell;
-import weixin.popular.support.msg.beans.receive.MsgEUserViewCard;
-import weixin.popular.support.msg.beans.receive.MsgEVerifyExpired;
-import weixin.popular.support.msg.beans.receive.MsgEView;
-import weixin.popular.support.msg.beans.receive.MsgImage;
-import weixin.popular.support.msg.beans.receive.MsgLink;
-import weixin.popular.support.msg.beans.receive.MsgLocation;
-import weixin.popular.support.msg.beans.receive.MsgShortVideo;
-import weixin.popular.support.msg.beans.receive.MsgText;
-import weixin.popular.support.msg.beans.receive.MsgVideo;
-import weixin.popular.support.msg.beans.receive.MsgVoice;
+import weixin.popular.support.msg.beans.receive.*;
 
 /**
  * 各类推送信息处理接口
@@ -50,6 +10,9 @@ import weixin.popular.support.msg.beans.receive.MsgVoice;
  */
 public interface Replyer {
 
+	/**
+	 * 微信认证事件推送-年审通知消息处理
+	 */
 	public String annualRenew(String appId, MsgEAnnualRenew msg);
 	
 	/**
@@ -73,12 +36,23 @@ public interface Replyer {
 	 */
 	public String cardSkuRemind(String appId, MsgECardSkuRemind msg);
 	
+	/**
+	 * 卡券－会员卡激活事件消息处理
+	 */
+	public String submitMemberCardUserInfo(String appId, MsgESubmitMemberCardUserInfo msg);
+	
+	/**
+	 * 自定义菜单点击事件处理
+	 */
 	public String click(String appId, MsgEClick msg);
 
 	public String location(String appId, MsgELocation msg);
 
 	public String locationSelect(String appId, MsgELocationSelect msg);
 
+	/**
+	 * 事件推送群发结果通知
+	 */
 	public String massSendJobFinish(String appId, MsgEMassSendJobFinish msg);
 
 	public String namingVerifyFail(String appId, MsgENamingVerifyFail msg);
@@ -87,7 +61,7 @@ public interface Replyer {
 
 	public String picPhotoOrAlbum(String appId, MsgEPicPhotoOrAlbum msg);
 
-	public String picSysphoto(String appId, MsgEPicSysphoto msg);
+	public String picSysPhoto(String appId, MsgEPicSysphoto msg);
 
 	public String picWeixin(String appId, MsgEPicWeixin msg);
 
@@ -105,15 +79,18 @@ public interface Replyer {
 	 */
 	public String scan(String appId, MsgEScan msg);
 
-	public String scancodePush(String appId, MsgEScancodePush msg);
+	public String scanCodePush(String appId, MsgEScancodePush msg);
 
-	public String scancodeWaitmsg(String appId, MsgEScancodeWaitmsg msg);
+	public String scanCodeWaitMsg(String appId, MsgEScancodeWaitmsg msg);
 
 	/**
 	 * 消息管理－用户关注
 	 */
 	public String subscribe(String appId, MsgESubscribe msg);
 
+	/**
+	 * 模板消息发送结果通知
+	 */
 	public String templateSendJobFinish(String appId, MsgETemplateSendJobFinish msg);
 
 	/**
@@ -177,11 +154,11 @@ public interface Replyer {
 	/**
 	 * 摇一摇周边－红包绑定用户事件通知处理
 	 */
-	public String shakearoundlotterybind(String appId, MsgEShakeAroundLotteryBind msg);
+	public String shakeAroundLotteryBind(String appId, MsgEShakeAroundLotteryBind msg);
 	
 	/**
 	 * 微信摇一摇周边－摇一摇事件通知处理
 	 */
-	public String shakearoundusershake(String appId, MsgEShakeAroundUserShake msg);
+	public String shakeAroundUserShake(String appId, MsgEShakeAroundUserShake msg);
 
 }

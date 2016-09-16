@@ -204,7 +204,7 @@ public class CardTest extends TokenTest {
 		
 		actionInfo.setCard(card);
 		
-		card.setCardId("pkMP8vzXtVHX2UYPh_DtRypc_hK0");
+		card.setCardId("pkMP8v_DKDxy26ceI5Zos0W2kNYs");
 		card.setCode(null);
 		card.setIsUniqueCode(false);
 		card.setOpenid(null);

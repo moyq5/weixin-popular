@@ -127,6 +127,12 @@ public class BaseInfo {
 	 */
 	@JsonProperty("location_id_list")
 	private Integer[] locationIdList;
+	
+	/**
+	 * 设置本卡券支持全部门店，与location_id_list互斥
+	 */
+	@JsonProperty("use_all_locations")
+	private Boolean useAllLocations;
 
 	/**
 	 * 卡券顶部居中的按钮，如“立即使用”，仅在卡券状态正常(可以核销)时显示
@@ -590,6 +596,22 @@ public class BaseInfo {
 	 */
 	public void setSource(String source) {
 		this.source = source;
+	}
+
+	/**
+	 * 设置本卡券支持全部门店，与location_id_list互斥
+	 * @return 支持全部门店
+	 */
+	public Boolean getUseAllLocations() {
+		return useAllLocations;
+	}
+
+	/**
+	 * 设置本卡券支持全部门店，与location_id_list互斥
+	 * @param useAllLocations 支持全部门店
+	 */
+	public void setUseAllLocations(Boolean useAllLocations) {
+		this.useAllLocations = useAllLocations;
 	}
 
 }

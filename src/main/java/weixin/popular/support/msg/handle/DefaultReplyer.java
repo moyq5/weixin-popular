@@ -22,6 +22,7 @@ import weixin.popular.support.msg.beans.receive.MsgEScancodePush;
 import weixin.popular.support.msg.beans.receive.MsgEScancodeWaitmsg;
 import weixin.popular.support.msg.beans.receive.MsgEShakeAroundLotteryBind;
 import weixin.popular.support.msg.beans.receive.MsgEShakeAroundUserShake;
+import weixin.popular.support.msg.beans.receive.MsgESubmitMemberCardUserInfo;
 import weixin.popular.support.msg.beans.receive.MsgESubscribe;
 import weixin.popular.support.msg.beans.receive.MsgETemplateSendJobFinish;
 import weixin.popular.support.msg.beans.receive.MsgEUnSubscribe;
@@ -91,7 +92,7 @@ public class DefaultReplyer implements Replyer {
 	}
 
 	@Override
-	public String picSysphoto(String appId, MsgEPicSysphoto msg) {
+	public String picSysPhoto(String appId, MsgEPicSysphoto msg) {
 		return null;
 	}
 
@@ -118,12 +119,12 @@ public class DefaultReplyer implements Replyer {
 	}
 
 	@Override
-	public String scancodePush(String appId, MsgEScancodePush msg) {
+	public String scanCodePush(String appId, MsgEScancodePush msg) {
 		return null;
 	}
 
 	@Override
-	public String scancodeWaitmsg(String appId, MsgEScancodeWaitmsg msg) {
+	public String scanCodeWaitMsg(String appId, MsgEScancodeWaitmsg msg) {
 		return null;
 	}
 
@@ -250,14 +251,20 @@ public class DefaultReplyer implements Replyer {
 	}
 
 	@Override
-	public String shakearoundlotterybind(String appId,
+	public String shakeAroundLotteryBind(String appId,
 			MsgEShakeAroundLotteryBind msg) {
 		return null;
 	}
 
 	@Override
-	public String shakearoundusershake(String appId,
+	public String shakeAroundUserShake(String appId,
 			MsgEShakeAroundUserShake msg) {
+		return null;
+	}
+
+	@Override
+	public String submitMemberCardUserInfo(String appId,
+			MsgESubmitMemberCardUserInfo msg) {
 		return null;
 	}
 

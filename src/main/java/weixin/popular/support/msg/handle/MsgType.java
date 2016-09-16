@@ -19,39 +19,41 @@ public enum MsgType {
 	/**
 	 * 文本消息
 	 */
-	TEXT(MsgText.class),
+	TEXT("text", MsgText.class),
 	/**
 	 * 图片消息
 	 */
-	IMAGE(MsgImage.class),
+	IMAGE("image", MsgImage.class),
 	/**
 	 * 视频消息
 	 */
-	VIDEO(MsgVideo.class),
+	VIDEO("video", MsgVideo.class),
 	/**
 	 * 语音消息
 	 */
-	VOICE(MsgVoice.class),
+	VOICE("voice", MsgVoice.class),
 	/**
 	 * 短视频消息
 	 */
-	SHORT_VIDEO(MsgShortVideo.class),
+	SHORT_VIDEO("shortvideo", MsgShortVideo.class),
 	/**
 	 * 地理位置消息
 	 */
-	LOCATION(MsgLocation.class),
+	LOCATION("location", MsgLocation.class),
 	/**
 	 * 链接消息
 	 */
-	LINK(MsgLink.class),
+	LINK("link", MsgLink.class),
 	/**
 	 * 事件消息
 	 */
-	EVENT(null);
+	EVENT("event", null);
 
 	private Class<? extends Msg> msgClass;
-
-	MsgType(Class<? extends Msg> msgClass) {
+	private String msgType;
+	
+	MsgType(String msgType, Class<? extends Msg> msgClass) {
+		this.msgType = msgType;
 		this.msgClass = msgClass;
 	}
 
@@ -59,8 +61,8 @@ public enum MsgType {
 		return msgClass;
 	}
 
-	public void setMsgClass(Class<? extends Msg> msgClass) {
-		this.msgClass = msgClass;
+	public String getMsgType() {
+		return msgType;
 	}
 
 }

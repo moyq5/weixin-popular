@@ -1,10 +1,7 @@
 package weixin.popular.support.msg.handle;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 消息处理配置类
@@ -14,32 +11,15 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class MsgHandleConfig {
 
-	private static Logger log = LoggerFactory.getLogger(MsgHandleConfig.class);
-	
-	private static Replyer replyer = new DefaultReplyer();
+	private static Replyer replyer = null;
 	private static Converter converter = new DefaultConverter();
-	private static List<MsgType> onMsgTypes = new ArrayList<MsgType>();
-	private static List<EventType> onEventTypes = new ArrayList<EventType>();
-	private static MsgBasicHandler basicHandler;
-	private static MsgEventHandler eventHandler;
-	
-	static {
-		try {
-			for (MsgType destType : MsgType.values()) {
-				basicHandler = new MsgBasicHandler(destType, null != basicHandler ? basicHandler.clone() : null);
-			}
-			for (EventType destType : EventType.values()) {
-				eventHandler = new MsgEventHandler(destType, null != eventHandler ? eventHandler.clone() : null);
-			}
-		} catch (Exception e) {
-			log.error("消息处理类初始化异常：", e);
-		}
-	}
-	
+	private static Map<String, MsgType> msgTypes = new HashMap<String, MsgType>();
+	private static Map<String, EventType> events = new HashMap<String, EventType>();
+
 	public static Replyer getReplyer() {
 		return replyer;
 	}
-
+	
 	public static void setReplyer(Replyer replyer) {
 		MsgHandleConfig.replyer = replyer;
 	}
@@ -48,40 +28,62 @@ public abstract class MsgHandleConfig {
 		return converter;
 	}
 
+	/**
+	 * 指定xml字符和java对象之间转换的实现<br>
+	 * 默认为DefaultReplyer，使用了fastxml jackson实现
+	 * @author Moyq5
+	 * @date 2016年9月16日
+	 * @param converter
+	 */
 	public static void setConverter(Converter converter) {
 		MsgHandleConfig.converter = converter;
 	}
 
-	public static List<MsgType> getOnMsgTypes() {
-		return onMsgTypes;
+	/**
+	 * 添加普通消息处理类型，只有在这里添加相应的类型，才会执行相应消息的处理（即调用Replyer的相应方法，需要您定义自己的Replyer实现类）
+	 * @author Moyq5
+	 * @date 2016年9月16日
+	 * @param type
+	 */
+	public static void addHandleType(MsgType type) {
+		msgTypes.put(type.getMsgType(), type);
 	}
 
-	public static void setOnMsgTypes(List<MsgType> onMsgTypes) {
-		MsgHandleConfig.onMsgTypes = onMsgTypes;
+	/**
+	 * 添加事件消息处理类型，只有在这里添加相应的类型，才会执行相应消息的处理（即调用Replyer的相应方法，需要您定义自己的Replyer实现类）
+	 * @author Moyq5
+	 * @date 2016年9月16日
+	 * @param type
+	 */
+	public static void addHandleType(EventType type) {
+		events.put(type.getEvent(), type);
 	}
 
-	public static List<EventType> getOnEventTypes() {
-		return onEventTypes;
+	/**
+	 * 清除普通消息处理类型
+	 * @author Moyq5
+	 * @date 2016年9月16日
+	 */
+	public static void clearMsgHandleTypes() {
+		msgTypes.clear();
 	}
 
-	public static void setOnEventTypes(List<EventType> onEventTypes) {
-		MsgHandleConfig.onEventTypes = onEventTypes;
+	/**
+	 * 清除事件消息处理类型
+	 * @author Moyq5
+	 * @date 2016年9月16日
+	 */
+	public static void clearEventHandleTypes() {
+		events.clear();
+	}
+	
+
+	public static Map<String, MsgType> getMsgTypes() {
+		return msgTypes;
 	}
 
-	public static MsgBasicHandler getBasicHandler() {
-		return basicHandler;
-	}
-
-	public static void setBasicHandler(MsgBasicHandler basicHandler) {
-		MsgHandleConfig.basicHandler = basicHandler;
-	}
-
-	public static MsgEventHandler getEventHandler() {
-		return eventHandler;
-	}
-
-	public static void setEventHandler(MsgEventHandler eventHandler) {
-		MsgHandleConfig.eventHandler = eventHandler;
+	public static Map<String, EventType> getEvents() {
+		return events;
 	}
 
 }
