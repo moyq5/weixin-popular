@@ -18,7 +18,21 @@ import weixin.popular.bean.message.GetAllPrivateTemplateResult;
 import weixin.popular.bean.message.GetIndustryResult;
 import weixin.popular.bean.message.MessageSendResult;
 import weixin.popular.bean.message.Uploadvideo;
-import weixin.popular.bean.message.massmessage.MassMessage;
+import weixin.popular.bean.message.mass.delete.MassDelete;
+import weixin.popular.bean.message.mass.send.MassSendImage;
+import weixin.popular.bean.message.mass.send.MassSendMpNews;
+import weixin.popular.bean.message.mass.send.MassSendMpVideo;
+import weixin.popular.bean.message.mass.send.MassSendResult;
+import weixin.popular.bean.message.mass.send.MassSendText;
+import weixin.popular.bean.message.mass.send.MassSendVoice;
+import weixin.popular.bean.message.mass.send.MassSendWxCard;
+import weixin.popular.bean.message.mass.sendall.MassSendAllImage;
+import weixin.popular.bean.message.mass.sendall.MassSendAllMpNews;
+import weixin.popular.bean.message.mass.sendall.MassSendAllMpVideo;
+import weixin.popular.bean.message.mass.sendall.MassSendAllResult;
+import weixin.popular.bean.message.mass.sendall.MassSendAllText;
+import weixin.popular.bean.message.mass.sendall.MassSendAllVoice;
+import weixin.popular.bean.message.mass.sendall.MassSendAllWxCard;
 import weixin.popular.bean.message.message.Message;
 import weixin.popular.bean.message.preview.Preview;
 import weixin.popular.bean.message.templatemessage.TemplateMessage;
@@ -114,79 +128,160 @@ public class MessageAPI extends BaseAPI{
 
 
 	/**
-	 * 高级群发接口 根据分组进行群发
-	 * @param access_token access_token
-	 * @param messageJson messageJson
-	 * @return MessageSendResult
+	 * 根据分组进行群发
 	 */
-	public static MessageSendResult messageMassSendall(String access_token,String messageJson){
-		HttpUriRequest httpUriRequest = RequestBuilder.post()
-										.setHeader(jsonHeader)
-										.setUri(BASE_URI+"/cgi-bin/message/mass/sendall")
-										.addParameter(getATPN(), access_token)
-										.setEntity(new StringEntity(messageJson,Charset.forName("utf-8")))
-										.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,MessageSendResult.class);
+	public static MassSendAllResult massSendAll(String accessToken,
+			String postJson) {
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/cgi-bin/message/mass/sendall")
+				.addParameter(getATPN(), accessToken)
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest,
+				MassSendAllResult.class);
 	}
 
 	/**
-	 * 高级群发接口 根据分组进行群发
-	 * @param access_token access_token
-	 * @param massMessage massMessage
-	 * @return MessageSendResult
+	 * 根据分组进行群发（图片）
 	 */
-	public  static MessageSendResult messageMassSendall(String access_token,MassMessage massMessage){
-		String str = JsonUtil.toJson(massMessage);
-		return messageMassSendall(access_token,str);
-	}
-
-
-	/**
-	 * 高级群发接口 根据OpenID列表群发
-	 * @param access_token access_token
-	 * @param messageJson messageJson
-	 * @return MessageSendResult
-	 */
-	public static MessageSendResult messageMassSend(String access_token,String messageJson){
-		HttpUriRequest httpUriRequest = RequestBuilder.post()
-										.setHeader(jsonHeader)
-										.setUri(BASE_URI+"/cgi-bin/message/mass/send")
-										.addParameter(getATPN(), access_token)
-										.setEntity(new StringEntity(messageJson,Charset.forName("utf-8")))
-										.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,MessageSendResult.class);
+	public static MassSendAllResult massSendAll(String accessToken, MassSendAllImage image){
+		return massSendAll(accessToken,JsonUtil.toJson(image));
 	}
 
 	/**
-	 * 高级群发接口 根据OpenID列表群发
-	 * @param access_token access_token
-	 * @param massMessage massMessage
-	 * @return MessageSendResult
+	 * 根据分组进行群发（图文）
 	 */
-	public static MessageSendResult messageMassSend(String access_token,MassMessage massMessage){
-		String str = JsonUtil.toJson(massMessage);
-		return messageMassSend(access_token,str);
+	public static MassSendAllResult massSendAll(String accessToken, MassSendAllMpNews mpNews){
+		return massSendAll(accessToken,JsonUtil.toJson(mpNews));
 	}
 
+	/**
+	 * 根据分组进行群发（文本）
+	 */
+	public static MassSendAllResult massSendAll(String accessToken, MassSendAllText text){
+		return massSendAll(accessToken,JsonUtil.toJson(text));
+	}
 
 	/**
-	 * 高级群发接口	删除群发
-	 * 请注意，只有已经发送成功的消息才能删除删除消息只是将消息的图文详情页失效，
-	 * 已经收到的用户，还是能在其本地看到消息卡片。
-	 * 另外，删除群发消息只能删除图文消息和视频消息，其他类型的消息一经发送，无法删除。
-	 * @param access_token access_token
-	 * @param msg_id msg_id
-	 * @return BaseResult
+	 * 根据分组进行群发（视频）
 	 */
-	public static BaseResult messageMassDelete(String access_token,String msg_id){
-		String messageJson = String.format("{\"msg_id\":\"%s\"}",msg_id);
-		HttpUriRequest httpUriRequest = RequestBuilder.post()
-										.setHeader(jsonHeader)
-										.setUri(BASE_URI+"/cgi-bin/message/mass/delete")
-										.addParameter(getATPN(), access_token)
-										.setEntity(new StringEntity(messageJson,Charset.forName("utf-8")))
-										.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,BaseResult.class);
+	public static MassSendAllResult massSendAll(String accessToken, MassSendAllMpVideo video){
+		return massSendAll(accessToken,JsonUtil.toJson(video));
+	}
+
+	/**
+	 * 根据分组进行群发（语音）
+	 */
+	public static MassSendAllResult massSendAll(String accessToken, MassSendAllVoice voice){
+		return massSendAll(accessToken,JsonUtil.toJson(voice));
+	}
+
+	/**
+	 * 根据分组进行群发（卡券）
+	 */
+	public static MassSendAllResult massSendAll(String accessToken, MassSendAllWxCard wxCard){
+		return massSendAll(accessToken,JsonUtil.toJson(wxCard));
+	}
+
+	/**
+	 * 根据OpenID列表群发
+	 */
+	public static MassSendResult massSend(String accessToken, String postJson) {
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/cgi-bin/message/mass/send")
+				.addParameter(getATPN(), accessToken)
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest,
+				MassSendResult.class);
+	}
+
+	/**
+	 * 根据OpenID列表群发（图片）
+	 */
+	public static MassSendResult massSend(String accessToken, MassSendImage image) {
+		return massSend(accessToken, JsonUtil.toJson(image));
+	}
+	
+	/**
+	 * 根据OpenID列表群发（图文）
+	 */
+	public static MassSendResult massSend(String accessToken, MassSendMpNews mpNews) {
+		return massSend(accessToken, JsonUtil.toJson(mpNews));
+	}
+	
+	/**
+	 * 根据OpenID列表群发（视频）
+	 */
+	public static MassSendResult massSend(String accessToken, MassSendMpVideo mpVideo) {
+		return massSend(accessToken, JsonUtil.toJson(mpVideo));
+	}
+	
+	/**
+	 * 根据OpenID列表群发（文本）
+	 */
+	public static MassSendResult massSend(String accessToken, MassSendText text) {
+		return massSend(accessToken, JsonUtil.toJson(text));
+	}
+
+	/**
+	 * 根据OpenID列表群发（语音）
+	 */
+	public static MassSendResult massSend(String accessToken, MassSendVoice voice) {
+		return massSend(accessToken, JsonUtil.toJson(voice));
+	}
+
+	/**
+	 * 根据OpenID列表群发（卡券）
+	 */
+	public static MassSendResult massSend(String accessToken, MassSendWxCard wxCard) {
+		return massSend(accessToken, JsonUtil.toJson(wxCard));
+	}
+
+	/**
+	 * 删除群发<br>
+	 * 1、只有已经发送成功的消息才能删除<br>
+	 * 2、删除消息是将消息的图文详情页失效，已经收到的用户，还是能在其本地看到消息卡片。<br>
+	 * 3、删除群发消息只能删除图文消息和视频消息，其他类型的消息一经发送，无法删除。<br>
+	 * 4、如果多次群发发送的是一个图文消息，那么删除其中一次群发，就会删除掉这个图文消息也，导致所有群发都失效
+	 */
+	public static BaseResult massDelete(String accessToken, Long msgId) {
+		String postJson = String.format("{\"msg_id\":\"%s\"}", msgId);
+		return massDelete(accessToken, postJson);
+	}
+	
+	/**
+	 * 删除群发
+	 * 1、只有已经发送成功的消息才能删除<br>
+	 * 2、删除消息是将消息的图文详情页失效，已经收到的用户，还是能在其本地看到消息卡片。<br>
+	 * 3、删除群发消息只能删除图文消息和视频消息，其他类型的消息一经发送，无法删除。<br>
+	 * 4、如果多次群发发送的是一个图文消息，那么删除其中一次群发，就会删除掉这个图文消息也，导致所有群发都失效
+	 */
+	public static BaseResult massDelete(String accessToken, MassDelete massDelete) {
+		return massDelete(accessToken, massDelete.getMsgId());
+	}
+	
+	/**
+	 * 删除群发<br>
+	 * 1、只有已经发送成功的消息才能删除<br>
+	 * 2、删除消息是将消息的图文详情页失效，已经收到的用户，还是能在其本地看到消息卡片。<br>
+	 * 3、删除群发消息只能删除图文消息和视频消息，其他类型的消息一经发送，无法删除。<br>
+	 * 4、如果多次群发发送的是一个图文消息，那么删除其中一次群发，就会删除掉这个图文消息也，导致所有群发都失效
+	 */
+	public static BaseResult massDelete(String accessToken, String postJson) {
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/cgi-bin/message/mass/delete")
+				.addParameter(getATPN(), accessToken)
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest,
+				BaseResult.class);
 	}
 
 	/**
