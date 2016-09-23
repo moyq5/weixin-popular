@@ -19,6 +19,13 @@ import weixin.popular.bean.message.GetIndustryResult;
 import weixin.popular.bean.message.MessageSendResult;
 import weixin.popular.bean.message.Uploadvideo;
 import weixin.popular.bean.message.mass.delete.MassDelete;
+import weixin.popular.bean.message.mass.preview.MassPreviewImage;
+import weixin.popular.bean.message.mass.preview.MassPreviewMpNews;
+import weixin.popular.bean.message.mass.preview.MassPreviewMpVideo;
+import weixin.popular.bean.message.mass.preview.MassPreviewResult;
+import weixin.popular.bean.message.mass.preview.MassPreviewText;
+import weixin.popular.bean.message.mass.preview.MassPreviewVoice;
+import weixin.popular.bean.message.mass.preview.MassPreviewWxCard;
 import weixin.popular.bean.message.mass.send.MassSendImage;
 import weixin.popular.bean.message.mass.send.MassSendMpNews;
 import weixin.popular.bean.message.mass.send.MassSendMpVideo;
@@ -34,7 +41,6 @@ import weixin.popular.bean.message.mass.sendall.MassSendAllText;
 import weixin.popular.bean.message.mass.sendall.MassSendAllVoice;
 import weixin.popular.bean.message.mass.sendall.MassSendAllWxCard;
 import weixin.popular.bean.message.message.Message;
-import weixin.popular.bean.message.preview.Preview;
 import weixin.popular.bean.message.templatemessage.TemplateMessage;
 import weixin.popular.bean.message.templatemessage.TemplateMessageResult;
 import weixin.popular.client.LocalHttpClient;
@@ -286,20 +292,59 @@ public class MessageAPI extends BaseAPI{
 
 	/**
 	 * 预览接口
-	 * @since 2.6.3
-	 * @param access_token access_token
-	 * @param preview preview
-	 * @return MessageSendResult
 	 */
-	public static MessageSendResult messageMassPreview(String access_token,Preview preview){
-		String previewJson = JsonUtil.toJson(preview);
-		HttpUriRequest httpUriRequest = RequestBuilder.post()
-										.setHeader(jsonHeader)
-										.setUri(BASE_URI+"/cgi-bin/message/mass/preview")
-										.addParameter(getATPN(), access_token)
-										.setEntity(new StringEntity(previewJson,Charset.forName("utf-8")))
-										.build();
-		return LocalHttpClient.executeJsonResult(httpUriRequest,MessageSendResult.class);
+	public static MassPreviewResult massPreview(String accessToken, String postJson) {
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/cgi-bin/message/mass/preview")
+				.addParameter(getATPN(), accessToken)
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest,
+				MassPreviewResult.class);
+	}
+
+	/**
+	 * 预览接口（图片）
+	 */
+	public static MassPreviewResult massPreview(String accessToken, MassPreviewImage image) {
+		return massPreview(accessToken, JsonUtil.toJson(image));
+	}
+	
+	/**
+	 * 预览接口（图文）
+	 */
+	public static MassPreviewResult massPreview(String accessToken, MassPreviewMpNews mpNews) {
+		return massPreview(accessToken, JsonUtil.toJson(mpNews));
+	}
+	
+	/**
+	 * 预览接口（视频）
+	 */
+	public static MassPreviewResult massPreview(String accessToken, MassPreviewMpVideo mpVideo) {
+		return massPreview(accessToken, JsonUtil.toJson(mpVideo));
+	}
+	
+	/**
+	 * 预览接口（文本）
+	 */
+	public static MassPreviewResult massPreview(String accessToken, MassPreviewText text) {
+		return massPreview(accessToken, JsonUtil.toJson(text));
+	}
+
+	/**
+	 * 预览接口（语音）
+	 */
+	public static MassPreviewResult massPreview(String accessToken, MassPreviewVoice voice) {
+		return massPreview(accessToken, JsonUtil.toJson(voice));
+	}
+
+	/**
+	 * 预览接口（卡券）
+	 */
+	public static MassPreviewResult massPreview(String accessToken, MassPreviewWxCard wxCard) {
+		return massPreview(accessToken, JsonUtil.toJson(wxCard));
 	}
 	
 	/**

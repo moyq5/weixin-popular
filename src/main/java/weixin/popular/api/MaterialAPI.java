@@ -3,7 +3,6 @@ package weixin.popular.api;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.util.List;
 
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -20,7 +19,8 @@ import weixin.popular.bean.material.MaterialcountResult;
 import weixin.popular.bean.material.addmaterial.AddMaterialResult;
 import weixin.popular.bean.material.addnews.AddNews;
 import weixin.popular.bean.material.addnews.AddNewsResult;
-import weixin.popular.bean.material.addnews.Article;
+import weixin.popular.bean.material.delmaterial.DelMaterial;
+import weixin.popular.bean.material.updatenews.UpdateNews;
 import weixin.popular.client.BytesOrJsonResponseHandler;
 import weixin.popular.client.LocalHttpClient;
 import weixin.popular.util.JsonUtil;
@@ -222,57 +222,56 @@ public class MaterialAPI extends BaseAPI {
 				BytesOrJsonResponseHandler
 						.createResponseHandler(MaterialGetResult.class));
 	}
-
+	
 	/**
 	 * 删除永久素材
-	 * 
-	 * @param access_token
-	 *            access_token
-	 * @param media_id
-	 *            media_id
-	 * @return BaseResult
 	 */
-	public static BaseResult del_material(String access_token, String media_id) {
+	public static BaseResult delMaterial(String accessToken, String postJson) {
 		HttpUriRequest httpUriRequest = RequestBuilder
 				.post()
 				.setHeader(jsonHeader)
 				.setUri(BASE_URI + "/cgi-bin/material/del_material")
-				.addParameter(getATPN(), access_token)
-				.setEntity(
-						new StringEntity("{\"media_id\":\"" + media_id + "\"}",
-								Charset.forName("utf-8"))).build();
+				.addParameter(getATPN(), accessToken)
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
 		return LocalHttpClient.executeJsonResult(httpUriRequest,
 				BaseResult.class);
 	}
+	
+	/**
+	 * 删除永久素材
+	 */
+	public static BaseResult delMaterial(String accessToken, DelMaterial media) {
+		return delMaterial(accessToken, "{\"media_id\":\"" + media.getMediaId() + "\"}");
+	}
 
 	/**
-	 * 修改永久图文素材
-	 * 
-	 * @param access_token
-	 *            access_token
-	 * @param media_id
-	 *            要修改的图文消息的id
-	 * @param index
-	 *            要更新的文章在图文消息中的位置（多图文消息时，此字段才有意义），第一篇为0
-	 * @param articles
-	 *            articles
-	 * @return BaseResult
+	 * 删除永久素材
 	 */
-	public static BaseResult update_news(String access_token, String media_id,
-			int index, List<Article> articles) {
-		String str = JsonUtil.toJson(articles);
-		String messageJson = "{\"media_id\":\"" + media_id + "\",\"index\":"
-				+ index + ",\"articles\":" + str + "}";
+	public static BaseResult delMaterialByMediaId(String accessToken, String mediaId) {
+		return delMaterial(accessToken, "{\"media_id\":\"" + mediaId + "\"}");
+	}
+	
+	/**
+	 * 修改永久图文素材
+	 */
+	public static BaseResult updateNews(String accessToken, String postJson) {
 		HttpUriRequest httpUriRequest = RequestBuilder
 				.post()
 				.setHeader(jsonHeader)
 				.setUri(BASE_URI + "/cgi-bin/material/update_news")
-				.addParameter(getATPN(), access_token)
-				.setEntity(
-						new StringEntity(messageJson, Charset.forName("utf-8")))
+				.addParameter(getATPN(), accessToken)
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
 				.build();
 		return LocalHttpClient.executeJsonResult(httpUriRequest,
 				BaseResult.class);
+	}
+	
+	/**
+	 * 修改永久图文素材
+	 */
+	public static BaseResult updateNews(String accessToken, UpdateNews updateNews) {
+		return updateNews(accessToken, JsonUtil.toJson(updateNews));
 	}
 
 	/**
