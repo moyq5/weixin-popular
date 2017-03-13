@@ -24,7 +24,7 @@ public class MembersBatchTagging {
 	 * 标签id
 	 */
 	@JsonProperty("tagid")
-	private String tagId;
+	private Integer tagId;
 
 	/**
 	 * @return 粉丝openId列表
@@ -43,14 +43,14 @@ public class MembersBatchTagging {
 	/**
 	 * @return 标签id
 	 */
-	public String getTagId() {
+	public Integer getTagId() {
 		return tagId;
 	}
 
 	/**
 	 * @param tagId 标签id
 	 */
-	public void setTagId(String tagId) {
+	public void setTagId(Integer tagId) {
 		this.tagId = tagId;
 	}
 }
