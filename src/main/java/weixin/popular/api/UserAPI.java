@@ -12,6 +12,8 @@ import weixin.popular.bean.user.FollowResult;
 import weixin.popular.bean.user.Group;
 import weixin.popular.bean.user.User;
 import weixin.popular.bean.user.UserInfoList;
+import weixin.popular.bean.user.tag.get.TagGet;
+import weixin.popular.bean.user.tag.get.TagGetResult;
 import weixin.popular.client.LocalHttpClient;
 import weixin.popular.util.EmojiUtil;
 import weixin.popular.util.JsonUtil;
@@ -265,6 +267,29 @@ public class UserAPI extends BaseAPI{
 										.setEntity(new StringEntity(groupJson,Charset.forName("utf-8")))
 										.build();
 		return LocalHttpClient.executeJsonResult(httpUriRequest,BaseResult.class);
+	}
+
+
+	/**
+	 * 获取标签下粉丝列表
+	 */
+	public static TagGetResult tagGet(String accessToken, String postJson) {
+		HttpUriRequest httpUriRequest = RequestBuilder
+				.post()
+				.setHeader(jsonHeader)
+				.setUri(BASE_URI + "/cgi-bin/user/tag/get")
+				.addParameter(getATPN(), accessToken)
+				.setEntity(new StringEntity(postJson, Charset.forName("utf-8")))
+				.build();
+		return LocalHttpClient.executeJsonResult(httpUriRequest,
+				TagGetResult.class);
+	}
+
+	/**
+	 * 获取标签下粉丝列表
+	 */
+	public static TagGetResult tagGet(String accessToken, TagGet tagGet) {
+		return tagGet(accessToken, JsonUtil.toJson(tagGet));
 	}
 
 }
